@@ -63,7 +63,26 @@
   <body>
     <div style="width: 100%">
       <div style="margin: 0px auto; width: 60%; display: block;">
-        Static page
+       <!--  <a href="/home">home</a> -->
+        <button onClick="fire()">
+        Click Me
+        </button>
+        <p>Click Here to enter 4 new json datasets into anime.db</p>
+        <button onClick="fireagain()">
+        Click Me to find
+        </button>
+        <p>find items</p>
+        <form onsubmit="firetwo()">Title:
+        <input id="animeName"></input>
+        Type:
+        <input id="animeType"></input>
+        Seasons:
+        <input id="animeSeasons"></input>
+        Dvds:
+        <input id="animeDvds"></input>
+        <input type="submit" value="Submit"></input>
+        </form>
+        <div id="export"></div>
       </div>
     </div>
   
