@@ -1,7 +1,7 @@
 {
   "name": "Bakku",
   "description": "A custom Firebase alternative, Bakku provides users with a rest api starter and backend kit.",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "homepage": "",
   "main": "src/",
   "keywords": [

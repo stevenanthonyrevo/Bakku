@@ -1,78 +1,27 @@
-<html>
+<!doctype html>
+<html ng-app="ng-app" id="ng-app">
   <head>
-    <title>Welcome to Feathers</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html, body {
-        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-        font-weight: 400;
-        font-size: 16px;
-        color: #333;
-      }
-
-      .center-text {
-        text-align: center;
-      }
-
-      main {
-        margin-top: 100px;
-        padding: 20px;
-      }
-
-      img.logo {
-        display: block;
-        margin: 0 auto;
-        max-width: 100%;
-        margin-bottom: 30px;
-      }
-
-      h2 {
-        font-size: 2em;
-        font-weight: 100;
-      }
-
-      footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 20px;
-      }
-
-      footer p {
-        font-weight: 300;
-        font-size: 1.0em;
-      }
-
-      a {
-        color: #31D8A0;
-        text-decoration: none;
-      }
-
-      a:hover,
-      a:focus {
-        color: #31D8A0;
-      }
-    </style>
+    <title>Bakku</title>
+    <link rel="stylesheet" type="text/css" href="../css/flexboxgrid.min-6.3.0.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
   </head>
   <body>
     <div style="width: 100%">
       <div style="margin: 0px auto; width: 60%; display: block;">
-       <!--  <a href="/home">home</a> -->
+        <div ng-controller="actions">
+                <button ng-click="deletebutton()">
+                    Click Me Delete
+                </button>
+        </div>
         <button onClick="fire()">
         Click Me
         </button>
-        <p>Click Here to enter 4 new json datasets into anime.db</p>
+        <p>Click Here to enter 2 new json datasets into anime.db</p>
         <button onClick="fireagain()">
         Click Me to find
         </button>
         <p>find items</p>
-        <form onsubmit="firetwo()">Title:
+        <form onsubmit="firetwo()" id="myForm">Title:
         <input id="animeName"></input>
         Type:
         <input id="animeType"></input>
@@ -80,127 +29,61 @@
         <input id="animeSeasons"></input>
         Dvds:
         <input id="animeDvds"></input>
-        <input type="submit" value="Submit"></input>
+        <input type="submit" value="Submit" ng-click='go()'></input>
         </form>
         <div id="export"></div>
       </div>
     </div>
-  
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/core-js/2.1.4/core.min.js"></script>
-<script type="text/javascript" src="http://npmcdn.com/feathers-client@^1.0.0/dist/feathers.js"></script>
+<div class="container-fluid">
 
-<script type="text/javascript">
+   <!-- reverse  -->
+  <div class="row">
+    <div class="col-xs-6 col-lg-2">
+        <div class="box">
+            <h2>item 1</h2>
+            <div ng-controller="Hello">
+                <p>Title is <b>{{greeting.data[0].title}}</b></p>
+                <p>type is <b>{{greeting.data[0].type}}</b></p>
+                <p>Seasons is <b>{{greeting.data[0].seasons}}</b></p>
+                <p>Dvds is <b>{{greeting.data[0].dvds}}</b></p>
+                <p>ID is <b>{{greeting.data[0]._id}}</b></p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+    
+<table ng-controller="myDisplay" border="1">
+    <thead>
+        <td>Title</td>
+        <td>Dvds</td>
+        <td>Type</td>
+        <td>Ids</td>
+        <td>Seasons</td>
+    </thead>
+    <tr ng-repeat="x in items | orderBy : yourChoice">
+        <td>{{x.title}}</td>
+        <td>{{x.dvds}}</td> 
+        <td>{{x.type}}</td> 
+        <td>{{x._id}}</td> 
+        <td>{{x.seasons}}</td> 
+    </tr>
+</table>
+ 
+<!-- <div ng-controller="options">     
+    <select ng-model="ddlViewBy" ng-options="item as item.text for item in testitems">           
+    </select>
+    <p>Text: {{ddlViewBy.text}}</p>
+    <p>Value: {{ddlViewBy.value}}</p>
+<div> -->
 
-  var socket = io();
-
-  var app = feathers()
-  
-  app.configure(feathers.socketio(socket));
-
-  // var messageService = app.service('messages');
-
-  //ON LOAD CONSOLE.LOG OPTION
-  // messageService.on('created', function(message) {
-  //   console.log('Someone created a message', message.text);
-  // });
-
-  //fires function to create message into restful api/db
-  // messageService.create({
-  //   text: 'Message from client'
-  // });
-
-  // var animeService = app.service('/Animes');
-
-  // animeService.on('created', function(anime) {
-  //   console.log('A new anime has been added to the list', anime.title);
-  //   console.log('The new anime type is', anime.type);
-  //   console.log('The new anime has a total number of seasons', anime.seasons );
-  //   console.log('The new anime has a total number of dvds', anime.dvds);
-  // });
-
-
-//EXAMPLE one - hardcode data into db and restapi
-function fire() {
-
-  //stating the service again 
-  var animeService = app.service('/Animes');
-
-  //console login after created
-  animeService.on('created', function(anime) {
-    console.log('A new anime has been added to the list', anime.title);
-    console.log('The new anime type is', anime.type);
-    console.log('The new anime has a total number of seasons', anime.seasons );
-    console.log('The new anime has a total number of dvds', anime.dvds);
-  });
-
-  // button fires function to enter data into restful api.
-  animeService.create(
-    {title: 'SAO', type: 'fantasy', seasons: 'four', dvds: 5}
-  );
-
-  //button fires function to enter data into restful api.
-  animeService.create(
-    {title: 'One Peace', type: 'adventure', seasons: 'seven', dvds: 8}
-  );
-
-}
-
-//EXAMPLE two - form input data into db and restapi
-function firetwo() {
-
-  //custom variables for the input form above.
-  var animeName = document.getElementById('animeName').value;
-  var animeType = document.getElementById('animeType').value;
-  var animeSeasons = document.getElementById('animeSeasons').value;
-  var animeDvds = document.getElementById('animeDvds').value;
-
-  //stating the service again 
-  var animeService = app.service('/Animes');
-
-  //console login after created
-  animeService.on('created', function(anime) {
-    console.log('A new anime has been added to the list', anime.title);
-    console.log('The new anime type is', anime.type);
-    console.log('The new anime has a total number of seasons', anime.seasons );
-    console.log('The new anime has a total number of dvds', anime.dvds);
-  });
-
-  // buttton firestwo function to enter data into restful api. one-liner option.
-  animeService.create({title: animeName, type: animeType, seasons: animeSeasons, dvds: animeDvds});
-
-
-}
-
-function  fireagain() {
-  // Important must supply serivce data 
-  var animeService = app.service('/Animes');
-
-  //CUSTOM TRY DID NOT WORK, BUT FOUND OBJECTS WITH FIND()
-  // var itemstwo = animeService.find();
-  // console.log(itemstwo)
-  // console.log(itemstwo)
-  // console.log()
-
-  animeService.find({}).then(function(items){
-    //get all items 
-    console.log('Items!', items);
-
-     //example of  getting specifc line item 
-    console.log('Custom Line Items', items.data[2])
-
-    //example of item being picked 
-    console.log('Custom Title Items', items.data[2].title)
-
-    document.getElementById('export').innerHTML = items.data[2].title;
-  });
-
-
-
-}
-
-
-</script>
+<script src="../js/socket.io-1.4.5.js"></script>
+<script type="text/javascript" src="../js/core.js"></script>
+<script type="text/javascript" src="../js/feathers.js"></script>
+<script type="text/javascript" src="../js/app.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<!-- Angular client scripts must load after angular.min -->
+<script type="text/javascript" src="../js/bakku.js"></script> 
 
   </body>
 </html>
