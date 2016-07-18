@@ -1,97 +1,14 @@
 <html>
   <head>
     <title>Welcome to Feathers</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html, body {
-        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-        font-weight: 400;
-        font-size: 16px;
-        color: #333;
-      }
-
-      .center-text {
-        text-align: center;
-      }
-
-      main {
-        margin-top: 100px;
-        padding: 20px;
-      }
-
-      img.logo {
-        display: block;
-        margin: 0 auto;
-        max-width: 100%;
-        margin-bottom: 30px;
-      }
-
-      h2 {
-        font-size: 2em;
-        font-weight: 100;
-      }
-
-      footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 20px;
-      }
-
-      footer p {
-        font-weight: 300;
-        font-size: 1.0em;
-      }
-
-      a {
-        color: #31D8A0;
-        text-decoration: none;
-      }
-
-      a:hover,
-      a:focus {
-        color: #31D8A0;
-      }
-    </style>
+    
   </head>
   <body>
-    <button onClick="fire">
-      Click Me
-    </button>
-  
-<script type="text/javascript" src="socket.io/socket.io.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/core-js/2.1.4/core.min.js"></script>
-<script type="text/javascript" src="http://npmcdn.com/feathers-client@^1.0.0/dist/feathers.js"></script>
+    <div style="width: 100%">
+      <div style="margin: 0px auto; width: 60%; display: block;">
+        Static page go to: <b> /bakku </b> for dashboard
+      </div>
+    </div>
 
-<script type="text/javascript">
-
-  var socket = io();
-
-  var app = feathers()
-  
-  app.configure(feathers.socketio(socket));
-
-  var messageService = app.service('messages');
-
-  //ON LOAD CONSOLE.LOG
-  messageService.on('created', function(message) {
-    console.log('Someone created a message', message.text);
-  });
-
-  //CREATE MESSAGE
-  messageService.create({
-    text: 'Message from client'
-  });
-
-</script>
-
-
-</script>
   </body>
 </html>

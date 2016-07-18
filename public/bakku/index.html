@@ -1,0 +1,89 @@
+<!doctype html>
+<html ng-app="ng-app" id="ng-app">
+  <head>
+    <title>Bakku</title>
+    <link rel="stylesheet" type="text/css" href="../css/flexboxgrid.min-6.3.0.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+  </head>
+  <body>
+    <div style="width: 100%">
+      <div style="margin: 0px auto; width: 60%; display: block;">
+        <div ng-controller="actions">
+                <button ng-click="deletebutton()">
+                    Click Me Delete
+                </button>
+        </div>
+        <button onClick="fire()">
+        Click Me
+        </button>
+        <p>Click Here to enter 2 new json datasets into anime.db</p>
+        <button onClick="fireagain()">
+        Click Me to find
+        </button>
+        <p>find items</p>
+        <form onsubmit="firetwo()" id="myForm">Title:
+        <input id="animeName"></input>
+        Type:
+        <input id="animeType"></input>
+        Seasons:
+        <input id="animeSeasons"></input>
+        Dvds:
+        <input id="animeDvds"></input>
+        <input type="submit" value="Submit" ng-click='go()'></input>
+        </form>
+        <div id="export"></div>
+      </div>
+    </div>
+<div class="container-fluid">
+
+   <!-- reverse  -->
+  <div class="row">
+    <div class="col-xs-6 col-lg-2">
+        <div class="box">
+            <h2>item 1</h2>
+            <div ng-controller="Hello">
+                <p>Title is <b>{{greeting.data[0].title}}</b></p>
+                <p>type is <b>{{greeting.data[0].type}}</b></p>
+                <p>Seasons is <b>{{greeting.data[0].seasons}}</b></p>
+                <p>Dvds is <b>{{greeting.data[0].dvds}}</b></p>
+                <p>ID is <b>{{greeting.data[0]._id}}</b></p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+    
+<table ng-controller="myDisplay" border="1">
+    <thead>
+        <td>Title</td>
+        <td>Dvds</td>
+        <td>Type</td>
+        <td>Ids</td>
+        <td>Seasons</td>
+    </thead>
+    <tr ng-repeat="x in items | orderBy : yourChoice">
+        <td>{{x.title}}</td>
+        <td>{{x.dvds}}</td> 
+        <td>{{x.type}}</td> 
+        <td>{{x._id}}</td> 
+        <td>{{x.seasons}}</td> 
+    </tr>
+</table>
+ 
+<!-- <div ng-controller="options">     
+    <select ng-model="ddlViewBy" ng-options="item as item.text for item in testitems">           
+    </select>
+    <p>Text: {{ddlViewBy.text}}</p>
+    <p>Value: {{ddlViewBy.value}}</p>
+<div> -->
+
+<script src="../js/socket.io-1.4.5.js"></script>
+<script type="text/javascript" src="../js/core.js"></script>
+<script type="text/javascript" src="../js/feathers.js"></script>
+<script type="text/javascript" src="../js/app.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<!-- Angular client scripts must load after angular.min -->
+<script type="text/javascript" src="../js/bakku.js"></script> 
+
+  </body>
+</html>
